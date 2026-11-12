@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- ============================================================
+       HEAD: page metadata, fonts, styles and the theme script
+       ============================================================ -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devang Sharma | Full-Stack Web Developer</title>
+  <meta name="description" content="Portfolio of Devang Sharma, a 5th semester Computer Science student and full-stack web developer (React, Node.js, Express, MongoDB) looking for a remote full-stack internship.">
+  <meta name="author" content="Devang Sharma">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Google Fonts:
+       Bricolage Grotesque = headings + body (chunky, zine-like)
+       Kalam               = handwritten margin notes
+       JetBrains Mono      = small labels, numbers and tags -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Kalam:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Loaded in <head> on purpose (no defer): it applies the saved
+       theme before the page paints, so there is no flash. -->
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <!-- Skip link: lets keyboard users jump past the navigation -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================================================
+       SITE HEADER: name, section links, theme toggle
+       ============================================================ -->
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="logo" href="#top" aria-label="Devang Sharma, back to top">devang<span>.</span></a>
+
+      <nav class="site-nav" aria-label="Sections">
+        <ul>
+          <li><a href="#about">about</a></li>
+          <li><a href="#projects">work</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- The word inside the brackets is set by script.js ("light" / "dark") -->
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme">
+        <span aria-hidden="true">[</span><span class="theme-toggle__label">light</span><span aria-hidden="true">]</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         01 / HERO: big name with a margin note, taped fact card
+         ============================================================ -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap hero__grid">
+
+        <div class="hero__main">
+          <p class="label"><span class="num-sticker">01</span> hello</p>
+
+          <div class="hero__name-row">
+            <h1 class="hero__name" id="hero-title">Devang<br>Sharma</h1>
+            <p class="note hero__note" aria-hidden="true">&larr; that's me</p>
+          </div>
+
+          <!-- Hand-drawn squiggle under the name (decorative) -->
+          <svg class="squiggle" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M3 12 C 30 2, 50 19, 80 10 S 130 2, 160 11 S 220 19, 250 9 S 288 4, 297 10" />
+          </svg>
+
+          <p class="hero__tagline">I build web apps, front to back.</p>
+          <p class="hero__role">
+            Full-stack developer working with React, Node.js, Express and MongoDB.
+            5th semester CS student, looking for a remote full-stack internship.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--sticker" href="#projects">View Projects</a>
+            <a class="btn btn--paper" href="https://drive.google.com/file/d/1J-Y6T7MGhTPacxCkJWbF-gRKC-wsZ6fQ/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+              Resume <span aria-hidden="true">&#8599;</span>
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick facts on a taped paper card -->
+        <aside class="card hero__card" aria-label="Quick facts">
+          <span class="tape" aria-hidden="true"></span>
+          <p class="card__label">quick facts</p>
+          <dl class="facts">
+            <div>
+              <dt>currently</dt>
+              <dd>5th semester, Computer Science</dd>
+            </div>
+            <div>
+              <dt>stack</dt>
+              <dd>React, Redux Toolkit, Node.js, Express, MongoDB</dd>
+            </div>
+            <div>
+              <dt>learning</dt>
+              <dd>Python full stack</dd>
+            </div>
+            <div>
+              <dt>looking for</dt>
+              <dd>A remote full-stack internship</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         02 / ABOUT: three short lines on a taped card
+         ============================================================ -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="num-sticker">02</span>
+          <h2 class="section__title" id="about-title">About me</h2>
+          <p class="note" aria-hidden="true">(the short version)</p>
+        </header>
+
+        <div class="card about">
+          <span class="tape tape--left" aria-hidden="true"></span>
+          <p class="about__lead">
+            I'm Devang, a 5th semester CS student who builds web apps from the
+            front end all the way to the database.
+          </p>
+          <p>
+            I like reading a codebase end to end. On StudyNotion I followed signup
+            from the React form, through the Express API, into MongoDB, and found
+            security bugs on the way.
+          </p>
+          <p>Right now I'm learning Python full stack.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         03 / PROJECTS: one big taped card per project, each with a
+         handwritten note beside it
+         ============================================================ -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="num-sticker">03</span>
+          <h2 class="section__title" id="projects-title">Things I've built</h2>
+          <p class="note" aria-hidden="true">(2 of them, both live)</p>
+        </header>
+
+        <ol class="projects">
+
+          <!-- Project: StudyNotion -->
+          <li class="project">
+            <article class="card project__card" aria-labelledby="p1-title">
+              <span class="tape" aria-hidden="true"></span>
+
+              <div class="project__top">
+                <span class="project__num">03.1</span>
+                <h3 class="project__title" id="p1-title">StudyNotion</h3>
+              </div>
+
+              <div class="project__body">
+                <div class="project__main">
+                  <p class="project__desc">
+                    A MERN ed-tech platform where instructors create courses and
+                    students buy and watch them. It has OTP signup, JWT auth with
+                    cookies, Razorpay payments and Cloudinary uploads.
+                  </p>
+
+                  <h4 class="card__label">what I did</h4>
+                  <ul class="checklist">
+                    <li>Traced the full signup flow (OTP email, bcrypt hashing, JWT login) across the React frontend, Express API and MongoDB.</li>
+                    <li>Fixed the deployment setup, including the mail, Cloudinary and Razorpay environment variables on Render and locally.</li>
+                    <li>Found security bugs in the original project, like password hashes being sent in API responses and a faulty instructor approval check.</li>
+                  </ul>
+                </div>
+
+                <div class="project__meta">
+                  <ul class="tags" aria-label="Tech used">
+                    <li>React</li>
+                    <li>Node.js</li>
+                    <li>Express</li>
+                    <li>MongoDB</li>
+                    <li>JWT</li>
+                    <li>Razorpay</li>
+                    <li>Cloudinary</li>
+                  </ul>
+                  <ul class="project__links">
+                    <li>
+                      <a href="https://studynotion-eduplat.vercel.app" target="_blank" rel="noopener noreferrer">
+                        live site <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: StudyNotion (opens in a new tab)</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/devsedoc/studynotion-edtech" target="_blank" rel="noopener noreferrer">
+                        code <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: StudyNotion on GitHub (opens in a new tab)</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <!-- Margin note with a hand-drawn arrow pointing at the card -->
+            <p class="note project__note" aria-hidden="true">
+              found the security bugs in this one!
+              <svg class="arrow" viewBox="0 0 80 60" focusable="false">
+                <path d="M74 8 C 56 4, 26 12, 12 44" />
+                <path d="M12 44 L 26 40 M12 44 L 16 29" />
+              </svg>
+            </p>
+          </li>
+
+          <!-- Project: DevDetective (note sits on the other side) -->
+          <li class="project project--flip">
+            <article class="card project__card" aria-labelledby="p2-title">
+              <span class="tape tape--right" aria-hidden="true"></span>
+
+              <div class="project__top">
+                <span class="project__num">03.2</span>
+                <h3 class="project__title" id="p2-title">DevDetective</h3>
+              </div>
+
+              <div class="project__body">
+                <div class="project__main">
+                  <p class="project__desc">
+                    Type a GitHub username, get their profile. Written in vanilla
+                    JavaScript on top of the GitHub REST API, with error handling
+                    for users that don't exist, a dark mode and a responsive layout.
+                  </p>
+                </div>
+
+                <div class="project__meta">
+                  <ul class="tags" aria-label="Tech used">
+                    <li>JavaScript</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>GitHub REST API</li>
+                  </ul>
+                  <ul class="project__links">
+                    <li>
+                      <a href="https://devsedoc.github.io/DevDetective" target="_blank" rel="noopener noreferrer">
+                        live site <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: DevDetective (opens in a new tab)</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/devsedoc/DevDetective" target="_blank" rel="noopener noreferrer">
+                        code <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: DevDetective on GitHub (opens in a new tab)</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <p class="note project__note" aria-hidden="true">
+              no framework, just plain JS
+              <svg class="arrow" viewBox="0 0 80 60" focusable="false">
+                <path d="M74 8 C 56 4, 26 12, 12 44" />
+                <path d="M12 44 L 26 40 M12 44 L 16 29" />
+              </svg>
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         04 / SKILLS: four sticky notes, each tilted a little
+         ============================================================ -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="num-sticker">04</span>
+          <h2 class="section__title" id="skills-title">What I work with</h2>
+        </header>
+
+        <div class="skills">
+          <div class="card skill-note">
+            <span class="tape" aria-hidden="true"></span>
+            <h3 class="card__label">frontend</h3>
+            <ul>
+              <li>React</li>
+              <li>Redux Toolkit</li>
+              <li>JavaScript</li>
+              <li>HTML</li>
+              <li>CSS</li>
+            </ul>
+          </div>
+
+          <div class="card skill-note">
+            <span class="tape" aria-hidden="true"></span>
+            <h3 class="card__label">backend</h3>
+            <ul>
+              <li>Node.js</li>
+              <li>Express</li>
+              <li>JWT auth</li>
+            </ul>
+          </div>
+
+          <div class="card skill-note">
+            <span class="tape" aria-hidden="true"></span>
+            <h3 class="card__label">database</h3>
+            <ul>
+              <li>MongoDB</li>
+            </ul>
+            <p class="note skill-note__extra" aria-hidden="true">next up: Python full stack</p>
+          </div>
+
+          <div class="card skill-note">
+            <span class="tape" aria-hidden="true"></span>
+            <h3 class="card__label">tools</h3>
+            <ul>
+              <li>GitHub</li>
+              <li>Render</li>
+              <li>Vercel</li>
+              <li>Cloudinary</li>
+              <li>Razorpay</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         05 / CONTACT: handwritten prompt, big email, sticker links
+         ============================================================ -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="num-sticker">05</span>
+          <h2 class="section__title" id="contact-title">Say hello</h2>
+        </header>
+
+        <p class="contact__intro">
+          I'm looking for a remote full-stack internship. If you have one, or just
+          want to talk about code, email is the best way to reach me.
+        </p>
+
+        <p class="note contact__note" aria-hidden="true">drop me a line &darr;</p>
+        <a class="contact__email" href="mailto:devangsharma200623@gmail.com">devangsharma200623<wbr>@gmail.com</a>
+
+        <ul class="contact__links">
+          <li><a class="btn btn--paper" href="https://github.com/devsedoc" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          <li><a class="btn btn--paper" href="https://www.linkedin.com/in/devangsharmaa/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          <li><a class="btn btn--paper" href="https://drive.google.com/file/d/1J-Y6T7MGhTPacxCkJWbF-gRKC-wsZ6fQ/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p>&copy; <span id="year">2026</span> Devang Sharma</p>
+      <p class="note">made by hand, with HTML, CSS &amp; plain JS</p>
+      <a href="#top">back to top &uarr;</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,755 @@
+/* =================================================================
+   Devang Sharma portfolio stylesheet
+   Look: a scrapbook / zine. Dark desk, cream paper cards held on
+   with yellow tape, handwritten margin notes, sticker buttons.
+
+   Sections:
+     1. Colour tokens (dark default + light)
+     2. Base / reset
+     3. Shared pieces (wrapper, labels, notes, stickers, tape, cards, buttons)
+     4. Header
+     5. Hero
+     6. Section heads
+     7. About
+     8. Projects
+     9. Skills
+    10. Contact
+    11. Footer
+    12. Responsive tweaks
+    13. Reduced motion
+   ================================================================= */
+
+
+/* -----------------------------------------------------------------
+   1. COLOUR TOKENS
+   Dark is the default. Light is used only when the visitor picks it
+   with the toggle (data-theme="light" on <html>).
+   Paper cards stay cream in both themes, like real paper on a desk.
+   One accent hue: marigold yellow (bright on dark, deeper on paper).
+   ----------------------------------------------------------------- */
+:root {
+  /* the desk (page background) */
+  --bg:          #16150F;
+  --ink:         #EDE8DC;
+  --ink-muted:   #A39E90;
+  --rule:        #36342B;
+
+  /* the paper (cards) */
+  --paper:       #F1ECDF;
+  --paper-ink:   #1B1A16;
+  --paper-muted: #5E594D;
+  --paper-rule:  #D6CEBB;
+
+  /* the one accent: marigold */
+  --accent:       #F5C542;                  /* notes + lines on the desk */
+  --paper-accent: #8A5A00;                  /* same hue, darker, for text on paper */
+  --sticker:      #F5C542;                  /* sticker fills */
+  --sticker-ink:  #16150F;
+  --tape:         rgba(245, 197, 66, 0.55);
+
+  --card-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), 0 18px 30px -16px rgba(0, 0, 0, 0.7);
+  --grain-opacity: 0.08;
+
+  --font-head: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-hand: "Kalam", "Comic Sans MS", cursive;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --max:    1180px;
+}
+
+/* Light theme: off-white desk, slightly brighter paper */
+:root[data-theme="light"] {
+  --bg:          #EDE8DC;
+  --ink:         #1B1A16;
+  --ink-muted:   #5E594D;
+  --rule:        #CFC7B5;
+
+  --paper:       #FFFDF6;
+  --paper-rule:  #E2DAC7;
+
+  --accent:      #8A5A00;
+  --tape:        rgba(245, 197, 66, 0.65);
+
+  --card-shadow: 0 1px 0 rgba(27, 26, 22, 0.08), 0 16px 28px -18px rgba(27, 26, 22, 0.45);
+  --grain-opacity: 0.05;
+}
+
+
+/* -----------------------------------------------------------------
+   2. BASE / RESET
+   ----------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Paper grain over the whole page (an SVG noise texture, purely decorative) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Rotated cards can poke past the edge; clip sideways overflow here
+   (not on body, so the sticky header keeps working) */
+main { overflow-x: clip; }
+
+h1, h2, h3, h4, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+a { color: inherit; }
+
+::selection {
+  background: var(--sticker);
+  color: var(--sticker-ink);
+}
+
+section[id] { scroll-margin-top: 72px; }
+
+
+/* -----------------------------------------------------------------
+   3. SHARED PIECES
+   ----------------------------------------------------------------- */
+
+/* Centered page column */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Small mono label */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+}
+
+/* Handwritten margin notes */
+.note {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+/* Yellow number stickers: 01, 02, 03 ... */
+.num-sticker {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--sticker);
+  color: var(--sticker-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 3px;
+  transform: rotate(-4deg);
+}
+
+/* Paper card: cream background, soft shadow, a slight tilt via --tilt */
+.card {
+  position: relative;
+  background: var(--paper);
+  color: var(--paper-ink);
+  padding: clamp(22px, 3vw, 36px);
+  border-radius: 2px;
+  box-shadow: var(--card-shadow);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.25s ease;
+}
+/* On hover the card straightens up, as if you pressed it flat */
+.card:hover,
+.card:focus-within { transform: rotate(0deg) translateY(-2px); }
+
+/* Small mono heading inside a card */
+.card__label {
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--paper-muted);
+}
+
+/* Strip of yellow tape holding a card down; ragged ends via clip-path */
+.tape {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 104px;
+  height: 26px;
+  background: var(--tape);
+  transform: translateX(-50%) rotate(-3deg);
+  clip-path: polygon(3% 0, 97% 6%, 100% 30%, 98% 62%, 100% 100%, 2% 94%, 0 64%, 3% 34%);
+}
+.tape--left  { left: 28px;  transform: rotate(-8deg); }
+.tape--right { left: auto; right: 28px; transform: rotate(7deg); }
+
+/* Keyboard focus: thick marigold outline, easy to see on desk and paper */
+:focus-visible {
+  outline: 3px solid var(--sticker);
+  outline-offset: 3px;
+}
+
+/* Text for screen readers only */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Skip link: hidden until focused with the keyboard */
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: var(--sticker);
+  color: var(--sticker-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+/* Buttons look like stickers and paper tags */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.7em 1.25em;
+  border: 2px solid var(--paper-ink);
+  border-radius: 4px;
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.55);
+  transition: transform 0.2s ease;
+}
+.btn--sticker {
+  background: var(--sticker);
+  color: var(--sticker-ink);
+  transform: rotate(-2deg);
+}
+.btn--paper {
+  background: var(--paper);
+  color: var(--paper-ink);
+  transform: rotate(1.5deg);
+}
+.btn:hover { transform: rotate(0deg) translateY(-2px); }
+
+
+/* -----------------------------------------------------------------
+   4. HEADER
+   ----------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1.5px dashed var(--rule);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 60px;
+}
+
+.logo {
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+.logo span { color: var(--accent); }
+
+.site-nav { margin-left: auto; }
+.site-nav ul {
+  display: flex;
+  gap: clamp(0.9rem, 3vw, 2rem);
+}
+.site-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  color: var(--ink-muted);
+  transition: color 0.2s ease;
+}
+.site-nav a:hover,
+.site-nav a[aria-current="true"] { color: var(--ink); }
+.site-nav a[aria-current="true"] {
+  text-decoration: underline wavy var(--accent);
+  text-underline-offset: 6px;
+}
+
+/* Theme toggle: bracketed word, like a terminal command */
+.theme-toggle {
+  padding: 0.3em 0.2em;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--accent); }
+
+
+/* -----------------------------------------------------------------
+   5. HERO: big name + note on the left, taped fact card on the right
+   ----------------------------------------------------------------- */
+.hero {
+  padding: clamp(40px, 7vw, 88px) 0 clamp(72px, 10vw, 128px);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 56px;
+  align-items: center;
+}
+.hero__main { grid-column: 1 / span 8; }
+.hero__card {
+  grid-column: 9 / span 4;
+  --tilt: 2.5deg;
+}
+
+.hero__name-row {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: 20px;
+}
+
+.hero__name {
+  font-size: clamp(3.75rem, 12vw, 9.25rem);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+
+.hero__note {
+  margin-bottom: 0.9em;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  white-space: nowrap;
+  transform: rotate(-6deg);
+}
+
+/* Hand-drawn squiggle under the name */
+.squiggle {
+  display: block;
+  width: min(420px, 72%);
+  height: 18px;
+  margin-top: 14px;
+  color: var(--accent);
+}
+.squiggle path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero__tagline {
+  margin-top: 26px;
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hero__role {
+  max-width: 46ch;
+  margin-top: 12px;
+  color: var(--ink-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+/* Quick facts list on the card */
+.facts > div {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--paper-rule);
+}
+.facts > div:last-child { border-bottom: 0; }
+.facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--paper-muted);
+}
+.facts dd {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+
+/* -----------------------------------------------------------------
+   6. SECTION HEADS: number sticker, chunky title, handwritten aside
+   ----------------------------------------------------------------- */
+.section {
+  padding: clamp(56px, 8vw, 104px) 0;
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+
+.section__title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+
+/* -----------------------------------------------------------------
+   7. ABOUT: one card, pushed off-centre
+   ----------------------------------------------------------------- */
+.about {
+  --tilt: -0.8deg;
+  max-width: 760px;
+  margin-left: clamp(0px, 10vw, 140px);
+}
+.about p + p { margin-top: 0.9rem; }
+.about p { color: var(--paper-muted); }
+
+.about__lead {
+  font-size: clamp(1.4rem, 2.4vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--paper-ink) !important;
+}
+
+
+/* -----------------------------------------------------------------
+   8. PROJECTS: big card + margin note, alternating sides
+   ----------------------------------------------------------------- */
+.projects {
+  display: grid;
+  gap: clamp(56px, 8vw, 96px);
+}
+
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  column-gap: 28px;
+  align-items: center;
+}
+.project:nth-child(1) .project__card { --tilt: -0.7deg; }
+.project:nth-child(2) .project__card { --tilt: 0.8deg; }
+
+/* Flipped row: note on the left, card on the right */
+.project--flip { grid-template-columns: 190px minmax(0, 1fr); }
+.project--flip .project__card { grid-column: 2; grid-row: 1; }
+.project--flip .project__note { grid-column: 1; grid-row: 1; text-align: right; transform: rotate(4deg); }
+.project--flip .arrow { margin-left: auto; transform: scaleX(-1); }
+
+.project__top {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.project__num {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--paper-accent);
+}
+.project__title {
+  font-size: clamp(2.4rem, 6vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.project__body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 24px;
+  margin-top: 18px;
+}
+.project__main { grid-column: 1 / span 7; }
+.project__meta { grid-column: 9 / span 4; }
+
+.project__desc {
+  max-width: 56ch;
+  font-size: 1.0625rem;
+}
+.project__desc + .card__label { margin-top: 24px; }
+
+/* "What I did" list with hand-drawn style ticks */
+.checklist li {
+  position: relative;
+  padding-left: 1.75em;
+  color: #3D3A33;
+  font-size: 1rem;
+}
+.checklist li + li { margin-top: 10px; }
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.45em;
+  width: 0.75em;
+  height: 0.38em;
+  border-left: 2.5px solid var(--paper-accent);
+  border-bottom: 2.5px solid var(--paper-accent);
+  transform: rotate(-45deg);
+}
+
+/* Tech tags as little outlined stickers */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tags li {
+  padding: 3px 10px;
+  border: 1.5px solid var(--paper-ink);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.tags li:nth-child(odd)  { transform: rotate(-1.5deg); }
+.tags li:nth-child(even) { transform: rotate(1.5deg); }
+
+.project__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 22px;
+}
+.project__links a {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--paper-accent);
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+.project__links a:hover { color: var(--paper-accent); }
+
+/* Handwritten note beside each card, with a drawn arrow */
+.project__note {
+  transform: rotate(-4deg);
+}
+.arrow {
+  display: block;
+  width: 80px;
+  height: 60px;
+  margin-top: 6px;
+}
+.arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* -----------------------------------------------------------------
+   9. SKILLS: four sticky notes with different tilts
+   ----------------------------------------------------------------- */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 28px;
+  align-items: start;
+}
+.skill-note:nth-child(1) { --tilt: -2deg; }
+.skill-note:nth-child(2) { --tilt: 1.5deg; margin-top: 18px; }
+.skill-note:nth-child(3) { --tilt: -1deg; }
+.skill-note:nth-child(4) { --tilt: 2deg; margin-top: 10px; }
+
+.skill-note li {
+  font-size: clamp(1.15rem, 1.8vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.skill-note__extra {
+  margin-top: 16px;
+  font-size: 1.15rem;
+  color: var(--paper-accent);
+  transform: rotate(-3deg);
+}
+
+
+/* -----------------------------------------------------------------
+   10. CONTACT
+   ----------------------------------------------------------------- */
+.contact__intro {
+  max-width: 50ch;
+  color: var(--ink-muted);
+}
+
+.contact__note {
+  margin-top: 28px;
+  transform: rotate(-3deg);
+  transform-origin: left;
+}
+
+/* The email is the main call to action: big, with a wavy underline */
+.contact__email {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: clamp(1.6rem, 4.6vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-decoration: underline wavy var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 10px;
+  overflow-wrap: break-word;
+  transition: color 0.2s ease;
+}
+.contact__email:hover { color: var(--accent); }
+
+.contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 40px;
+}
+.contact__links li:nth-child(2) .btn { transform: rotate(-1.5deg); }
+.contact__links li:nth-child(3) .btn { transform: rotate(2deg); }
+.contact__links .btn:hover { transform: rotate(0deg) translateY(-2px); }
+
+
+/* -----------------------------------------------------------------
+   11. FOOTER
+   ----------------------------------------------------------------- */
+.site-footer {
+  border-top: 1.5px dashed var(--rule);
+}
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 24px;
+  padding-bottom: 32px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+}
+.site-footer .note { font-size: 1.15rem; }
+.site-footer a { text-decoration: none; }
+.site-footer a:hover { color: var(--accent); }
+
+
+/* -----------------------------------------------------------------
+   12. RESPONSIVE
+   Tablet: everything stacks; notes sit under their cards, no arrows.
+   Phone: smaller type, tighter tilts, two sticky notes per row.
+   ----------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero__main { grid-column: 1 / -1; }
+  .hero__card {
+    grid-column: 1 / -1;
+    max-width: 440px;
+    margin-left: 8px;
+  }
+
+  .about { margin-left: 0; }
+
+  .project,
+  .project--flip { grid-template-columns: minmax(0, 1fr); row-gap: 14px; }
+  .project--flip .project__card { grid-column: 1; }
+  .project__note,
+  .project--flip .project__note {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+    padding-left: 12px;
+    transform: rotate(-2deg);
+  }
+  .arrow { display: none; }
+
+  .project__main,
+  .project__meta { grid-column: 1 / -1; }
+
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  body { font-size: 1rem; }
+
+  .site-header__inner { gap: 0.9rem; }
+  .site-nav ul { gap: 0.8rem; }
+  .site-nav a,
+  .theme-toggle { font-size: 0.75rem; }
+
+  .btn { flex: 1 1 auto; justify-content: center; }
+
+  .skills { gap: 26px 16px; }
+  .skill-note { padding: 20px 16px; }
+  .skill-note li { font-size: 1.05rem; }
+
+  .contact__links li { flex: 1 1 auto; }
+  .contact__links .btn { width: 100%; }
+}
+
+/* Very small phones: hide the logo so the nav has room */
+@media (max-width: 380px) {
+  .logo { display: none; }
+  .site-nav { margin-left: 0; }
+  .site-header__inner { justify-content: space-between; }
+}
+
+
+/* -----------------------------------------------------------------
+   13. REDUCED MOTION: no hover movement for people who ask for less
+   ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .btn { transition: none; }
+}
