@@ -133,7 +133,7 @@
             front end all the way to the database.
           </p>
           <p>
-            I like reading a codebase end to end. On StudyNotion I followed signup
+            I like reading a codebase end to end. On Learnloop I followed signup
             from the React form, through the Express API, into MongoDB, and found
             security bugs on the way.
           </p>
@@ -151,27 +151,29 @@
         <header class="section__head">
           <span class="num-sticker">03</span>
           <h2 class="section__title" id="projects-title">Things I've built</h2>
-          <p class="note" aria-hidden="true">(2 of them, both live)</p>
+          <p class="note" aria-hidden="true">(3 of them, all live)</p>
         </header>
 
         <ol class="projects">
 
-          <!-- Project: StudyNotion -->
+          <!-- Project: Learnloop -->
           <li class="project">
             <article class="card project__card" aria-labelledby="p1-title">
               <span class="tape" aria-hidden="true"></span>
 
               <div class="project__top">
                 <span class="project__num">03.1</span>
-                <h3 class="project__title" id="p1-title">StudyNotion</h3>
+                <h3 class="project__title" id="p1-title">Learnloop</h3>
               </div>
 
               <div class="project__body">
                 <div class="project__main">
                   <p class="project__desc">
-                    A MERN ed-tech platform where instructors create courses and
+                    A MERN course platform where instructors create courses and
                     students buy and watch them. It has OTP signup, JWT auth with
-                    cookies, Razorpay payments and Cloudinary uploads.
+                    cookies, Razorpay payments and Cloudinary uploads. I built it
+                    while following a MERN course, then redesigned and extended it
+                    on my own.
                   </p>
 
                   <h4 class="card__label">what I did</h4>
@@ -179,6 +181,7 @@
                     <li>Traced the full signup flow (OTP email, bcrypt hashing, JWT login) across the React frontend, Express API and MongoDB.</li>
                     <li>Fixed the deployment setup, including the mail, Cloudinary and Razorpay environment variables on Render and locally.</li>
                     <li>Found security bugs in the original project, like password hashes being sent in API responses and a faulty instructor approval check.</li>
+                    <li>Redesigned every page, made the course player work on phones, and fixed bugs in the forms, checkout and catalogue API.</li>
                   </ul>
                 </div>
 
@@ -194,13 +197,13 @@
                   </ul>
                   <ul class="project__links">
                     <li>
-                      <a href="https://studynotion-eduplat.vercel.app" target="_blank" rel="noopener noreferrer">
-                        live site <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: StudyNotion (opens in a new tab)</span>
+                      <a href="https://learnloop-devsedoc.vercel.app" target="_blank" rel="noopener noreferrer">
+                        live site <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: Learnloop (opens in a new tab)</span>
                       </a>
                     </li>
                     <li>
-                      <a href="https://github.com/devsedoc/studynotion-edtech" target="_blank" rel="noopener noreferrer">
-                        code <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: StudyNotion on GitHub (opens in a new tab)</span>
+                      <a href="https://github.com/devsedoc/learnloop" target="_blank" rel="noopener noreferrer">
+                        code <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: Learnloop on GitHub (opens in a new tab)</span>
                       </a>
                     </li>
                   </ul>
@@ -218,14 +221,73 @@
             </p>
           </li>
 
-          <!-- Project: DevDetective (note sits on the other side) -->
+          <!-- Project: Skycast (note sits on the other side) -->
           <li class="project project--flip">
             <article class="card project__card" aria-labelledby="p2-title">
               <span class="tape tape--right" aria-hidden="true"></span>
 
               <div class="project__top">
                 <span class="project__num">03.2</span>
-                <h3 class="project__title" id="p2-title">DevDetective</h3>
+                <h3 class="project__title" id="p2-title">Skycast</h3>
+              </div>
+
+              <div class="project__body">
+                <div class="project__main">
+                  <p class="project__desc">
+                    A weather app: search any city or use your location to see the
+                    current weather, the next 24 hours and the next 7 days. Built with
+                    React and TypeScript on the free Open-Meteo API.
+                  </p>
+
+                  <h4 class="card__label">what I did</h4>
+                  <ul class="checklist">
+                    <li>Built a keyboard-friendly city search with debounced suggestions.</li>
+                    <li>Saved favourites, recent searches and the &deg;C/&deg;F choice in localStorage.</li>
+                    <li>Wrote unit tests with Vitest and deployed it with GitHub Actions to GitHub Pages.</li>
+                  </ul>
+                </div>
+
+                <div class="project__meta">
+                  <ul class="tags" aria-label="Tech used">
+                    <li>React</li>
+                    <li>TypeScript</li>
+                    <li>Vite</li>
+                    <li>Vitest</li>
+                    <li>Open-Meteo API</li>
+                  </ul>
+                  <ul class="project__links">
+                    <li>
+                      <a href="https://devsedoc.github.io/skycast/" target="_blank" rel="noopener noreferrer">
+                        live site <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: Skycast (opens in a new tab)</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/devsedoc/skycast" target="_blank" rel="noopener noreferrer">
+                        code <span aria-hidden="true">&#8599;</span><span class="visually-hidden">: Skycast on GitHub (opens in a new tab)</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <p class="note project__note" aria-hidden="true">
+              has real unit tests!
+              <svg class="arrow" viewBox="0 0 80 60" focusable="false">
+                <path d="M74 8 C 56 4, 26 12, 12 44" />
+                <path d="M12 44 L 26 40 M12 44 L 16 29" />
+              </svg>
+            </p>
+          </li>
+
+          <!-- Project: DevDetective -->
+          <li class="project">
+            <article class="card project__card" aria-labelledby="p3-title">
+              <span class="tape" aria-hidden="true"></span>
+
+              <div class="project__top">
+                <span class="project__num">03.3</span>
+                <h3 class="project__title" id="p3-title">DevDetective</h3>
               </div>
 
               <div class="project__body">
